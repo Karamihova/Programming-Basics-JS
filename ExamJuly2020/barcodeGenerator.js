@@ -1,30 +1,66 @@
 function solve(input){
 
-    let start = Number(input.shift());
-    let end = Number(input.shift());
-    let correctBarcodes = "";
+    let start = input.shift();
+    let end = input.shift();
 
-    for (let i = start; i <= end; i++) {
-        let barcode = i.toString();
-        let isCorrect = true;
+    const nums = [];
+    let index = 0;
 
-        for (let j = 0; j < 4; j++) {
-            
-            let num = Number(barcode[j]);
-            if(num % 2 == 0){
-                isCorrect = false;
-                break;
-            }
+    for (let i = 0; i < start.length; i++) {
+
+        let num = Number(start[i]);
+        if(num % 2 != 0){
+            nums[index] = num;
+            index++;
+        }
+        
+    }
+
+    for (let i = 0; i < end.length; i++) {
+
+        let num = Number(end[i]);
+        if(num % 2 != 0){
+            nums[index] = num;
+            index++;
+        }
+        
+    }
+
+    const uniqueNums = Array.from(new Set(nums));
+    let a = Number(start);
+    let b = Number(end);
+    let isBarcode = true;
+    const array = [];
+    let arrIndex = 0;
+
+    for (let i = a; i <= b; i++) {
+       
+       let num = i.toString();
+        isBarcode = true;
+
+       for (let j = 0; j < num.length; j++) {
+
+        let currNum = Number(num[j]);
+        
+        if(!uniqueNums.includes(currNum)){
+            isBarcode = false;
+            break;
         }
 
-        if(isCorrect){
-            correctBarcodes += `${barcode} `;
+        
+       } 
+
+       if(isBarcode){
+
+            array[arrIndex] = num;
+            arrIndex++;
+
         }
     }
 
-    console.log(correctBarcodes);
+    console.log(`${array.join(' ')}`);
 
 }
 
-solve(["2345",
-"6789"])
+solve(["3353",
+"6579"]);
